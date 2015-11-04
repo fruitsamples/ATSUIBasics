@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		892A07DF0778213B0011CFBD /* helloworld.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A07DE0778213B0011CFBD /* helloworld.c */; };
+		892A0843077869FE0011CFBD /* verticaltext.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A0842077869FE0011CFBD /* verticaltext.c */; };
+		892A087307786CD10011CFBD /* filesupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A087207786CD10011CFBD /* filesupport.c */; };
+		892A087B07786FA40011CFBD /* JapaneseSample_UTF16.txt in Resources */ = {isa = PBXBuildFile; fileRef = 892A087A07786FA40011CFBD /* JapaneseSample_UTF16.txt */; };
+		892A08A9077874470011CFBD /* EnglishSample_UTF16.txt in Resources */ = {isa = PBXBuildFile; fileRef = 892A08A8077874470011CFBD /* EnglishSample_UTF16.txt */; };
+		892A0EB50778840A0011CFBD /* findparagraph.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A0EB40778840A0011CFBD /* findparagraph.c */; };
+		892A0EBA077884D90011CFBD /* multiplestyles.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A0EB9077884D90011CFBD /* multiplestyles.c */; };
+		892A0F40077899660011CFBD /* paragraphs.c in Sources */ = {isa = PBXBuildFile; fileRef = 892A0F3F077899660011CFBD /* paragraphs.c */; };
+		8997585807BD80A30076146A /* fontsubstitution.c in Sources */ = {isa = PBXBuildFile; fileRef = 8997585707BD80A30076146A /* fontsubstitution.c */; };
+		8997588D07BD90E00076146A /* FontSubstitutionExample_UTF16.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8997588C07BD90E00076146A /* FontSubstitutionExample_UTF16.txt */; };
+		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
+		8D0C4E8E0486CD37000505A6 /* main.nib in Resources */ = {isa = PBXBuildFile; fileRef = 02345980000FD03B11CA0E72 /* main.nib */; };
+		8D0C4E900486CD37000505A6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 20286C2BFDCF999611CA2CEA /* main.c */; settings = {ATTRIBUTES = (); }; };
+		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0867D6ABFE840B52C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1870340FFE93FCAF11CA0CD7 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/main.nib; sourceTree = "<group>"; };
+		20286C2BFDCF999611CA2CEA /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		32DBCF6D0370B57F00C91783 /* ATSUIBasics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATSUIBasics_Prefix.pch; sourceTree = "<group>"; };
+		4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		892A07740777FFED0011CFBD /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		892A07DD0778213B0011CFBD /* helloworld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helloworld.h; sourceTree = "<group>"; };
+		892A07DE0778213B0011CFBD /* helloworld.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = helloworld.c; sourceTree = "<group>"; };
+		892A0841077869FE0011CFBD /* verticaltext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verticaltext.h; sourceTree = "<group>"; };
+		892A0842077869FE0011CFBD /* verticaltext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = verticaltext.c; sourceTree = "<group>"; };
+		892A087107786CD10011CFBD /* filesupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filesupport.h; sourceTree = "<group>"; };
+		892A087207786CD10011CFBD /* filesupport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filesupport.c; sourceTree = "<group>"; };
+		892A087A07786FA40011CFBD /* JapaneseSample_UTF16.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = JapaneseSample_UTF16.txt; sourceTree = "<group>"; };
+		892A08A8077874470011CFBD /* EnglishSample_UTF16.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = EnglishSample_UTF16.txt; sourceTree = "<group>"; };
+		892A0EB30778840A0011CFBD /* findparagraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findparagraph.h; sourceTree = "<group>"; };
+		892A0EB40778840A0011CFBD /* findparagraph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = findparagraph.c; sourceTree = "<group>"; };
+		892A0EB8077884D90011CFBD /* multiplestyles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multiplestyles.h; sourceTree = "<group>"; };
+		892A0EB9077884D90011CFBD /* multiplestyles.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = multiplestyles.c; sourceTree = "<group>"; };
+		892A0EC3077888810011CFBD /* ReadMe.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ReadMe.rtf; sourceTree = "<group>"; };
+		892A0F3E077899660011CFBD /* paragraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paragraphs.h; sourceTree = "<group>"; };
+		892A0F3F077899660011CFBD /* paragraphs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = paragraphs.c; sourceTree = "<group>"; };
+		8997585607BD80A30076146A /* fontsubstitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontsubstitution.h; sourceTree = "<group>"; };
+		8997585707BD80A30076146A /* fontsubstitution.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fontsubstitution.c; sourceTree = "<group>"; };
+		8997588C07BD90E00076146A /* FontSubstitutionExample_UTF16.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = FontSubstitutionExample_UTF16.txt; sourceTree = "<group>"; };
+		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D0C4E970486CD37000505A6 /* ATSUIBasics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATSUIBasics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D0C4E910486CD37000505A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		195DF8CFFE9D517E11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D0C4E970486CD37000505A6 /* ATSUIBasics.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20286C29FDCF999611CA2CEA /* ATSUIBasics */ = {
+			isa = PBXGroup;
+			children = (
+				892A0EC3077888810011CFBD /* ReadMe.rtf */,
+				20286C2AFDCF999611CA2CEA /* Sources */,
+				20286C2CFDCF999611CA2CEA /* Resources */,
+				20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */,
+				195DF8CFFE9D517E11CA2CBB /* Products */,
+			);
+			name = ATSUIBasics;
+			sourceTree = "<group>";
+		};
+		20286C2AFDCF999611CA2CEA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF6D0370B57F00C91783 /* ATSUIBasics_Prefix.pch */,
+				892A07740777FFED0011CFBD /* main.h */,
+				20286C2BFDCF999611CA2CEA /* main.c */,
+				892A07DD0778213B0011CFBD /* helloworld.h */,
+				892A07DE0778213B0011CFBD /* helloworld.c */,
+				892A0EB8077884D90011CFBD /* multiplestyles.h */,
+				892A0EB9077884D90011CFBD /* multiplestyles.c */,
+				8997585607BD80A30076146A /* fontsubstitution.h */,
+				8997585707BD80A30076146A /* fontsubstitution.c */,
+				892A0841077869FE0011CFBD /* verticaltext.h */,
+				892A0842077869FE0011CFBD /* verticaltext.c */,
+				892A0F3E077899660011CFBD /* paragraphs.h */,
+				892A0F3F077899660011CFBD /* paragraphs.c */,
+				892A087107786CD10011CFBD /* filesupport.h */,
+				892A087207786CD10011CFBD /* filesupport.c */,
+				892A0EB30778840A0011CFBD /* findparagraph.h */,
+				892A0EB40778840A0011CFBD /* findparagraph.c */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		20286C2CFDCF999611CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8997588C07BD90E00076146A /* FontSubstitutionExample_UTF16.txt */,
+				892A08A8077874470011CFBD /* EnglishSample_UTF16.txt */,
+				892A087A07786FA40011CFBD /* JapaneseSample_UTF16.txt */,
+				8D0C4E960486CD37000505A6 /* Info.plist */,
+				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
+				02345980000FD03B11CA0E72 /* main.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				892A021C0777E2550011CFBD /* Linked Frameworks */,
+				892A00550777E24D0011CFBD /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		892A00550777E24D0011CFBD /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */,
+				4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		892A021C0777E2550011CFBD /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20286C33FDCF999611CA2CEA /* Carbon.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D0C4E890486CD37000505A6 /* ATSUIBasics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEB7DAC50C501CFA00A2E029 /* Build configuration list for PBXNativeTarget "ATSUIBasics" */;
+			buildPhases = (
+				8D0C4E8C0486CD37000505A6 /* Resources */,
+				8D0C4E8F0486CD37000505A6 /* Sources */,
+				8D0C4E910486CD37000505A6 /* Frameworks */,
+				89479635079FC93300E761A0 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ATSUIBasics;
+			productInstallPath = "$(HOME)/Applications";
+			productName = ATSUIBasics;
+			productReference = 8D0C4E970486CD37000505A6 /* ATSUIBasics.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		20286C28FDCF999611CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = BEB7DAC90C501CFA00A2E029 /* Build configuration list for PBXProject "ATSUIBasics" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 20286C29FDCF999611CA2CEA /* ATSUIBasics */;
+			projectDirPath = "";
+			targets = (
+				8D0C4E890486CD37000505A6 /* ATSUIBasics */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D0C4E8C0486CD37000505A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */,
+				8D0C4E8E0486CD37000505A6 /* main.nib in Resources */,
+				892A087B07786FA40011CFBD /* JapaneseSample_UTF16.txt in Resources */,
+				892A08A9077874470011CFBD /* EnglishSample_UTF16.txt in Resources */,
+				8997588D07BD90E00076146A /* FontSubstitutionExample_UTF16.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		89479635079FC93300E761A0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/tcsh;
+			shellScript = "xcodebuild installsrc SRCROOT=$DSTROOT/Developer/Examples/ATSUI/Basics\n/bin/rm -rf $DSTROOT/Developer/Examples/ATSUI/Basics/build/\n/usr/sbin/chown root:wheel $DSTROOT/Developer/Examples/ATSUI/Basics/*\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D0C4E8F0486CD37000505A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D0C4E900486CD37000505A6 /* main.c in Sources */,
+				892A07DF0778213B0011CFBD /* helloworld.c in Sources */,
+				892A0843077869FE0011CFBD /* verticaltext.c in Sources */,
+				892A087307786CD10011CFBD /* filesupport.c in Sources */,
+				892A0EB50778840A0011CFBD /* findparagraph.c in Sources */,
+				892A0EBA077884D90011CFBD /* multiplestyles.c in Sources */,
+				892A0F40077899660011CFBD /* paragraphs.c in Sources */,
+				8997585807BD80A30076146A /* fontsubstitution.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		02345980000FD03B11CA0E72 /* main.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1870340FFE93FCAF11CA0CD7 /* English */,
+			);
+			name = main.nib;
+			sourceTree = "<group>";
+		};
+		0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0867D6ABFE840B52C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BEB7DAC60C501CFA00A2E029 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ATSUIBasics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PREBINDING = NO;
+				PRODUCT_NAME = ATSUIBasics;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		BEB7DAC70C501CFA00A2E029 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ATSUIBasics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PREBINDING = NO;
+				PRODUCT_NAME = ATSUIBasics;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		BEB7DAC80C501CFA00A2E029 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ATSUIBasics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = ATSUIBasics;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		BEB7DACA0C501CFA00A2E029 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Development;
+		};
+		BEB7DACB0C501CFA00A2E029 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Deployment;
+		};
+		BEB7DACC0C501CFA00A2E029 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BEB7DAC50C501CFA00A2E029 /* Build configuration list for PBXNativeTarget "ATSUIBasics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEB7DAC60C501CFA00A2E029 /* Development */,
+				BEB7DAC70C501CFA00A2E029 /* Deployment */,
+				BEB7DAC80C501CFA00A2E029 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		BEB7DAC90C501CFA00A2E029 /* Build configuration list for PBXProject "ATSUIBasics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEB7DACA0C501CFA00A2E029 /* Development */,
+				BEB7DACB0C501CFA00A2E029 /* Deployment */,
+				BEB7DACC0C501CFA00A2E029 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 20286C28FDCF999611CA2CEA /* Project object */;
+}
