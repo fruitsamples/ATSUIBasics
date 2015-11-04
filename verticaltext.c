@@ -44,7 +44,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */
 
@@ -67,8 +67,11 @@ Copyright © 2004 Apple Computer, Inc., All Rights Reserved
 // will automatically choose glyph variants from fonts that
 // are more appropriate to veritcal text than to horizontal.
 //
-void DrawVerticalTextContents(WindowRef window)
+//--------------------------------------------------------------------------------------------
+OSStatus
+VerticalTextWindowEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData )
 {
+	OSStatus					status = noErr;
 	CFStringRef					string;
 	UniChar						*text;
 	UniCharCount				length;
@@ -87,15 +90,19 @@ void DrawVerticalTextContents(WindowRef window)
     ItemCount					numSoftBreaks;
     UniCharArrayOffset			*theSoftBreaks;
     int							i;
-    GrafPtr						port, savedPort;
-	Rect						portBounds;
+    HIRect						bounds;
 
-    // Set up the graphics port
-	port = GetWindowPort(window);
-    GetPort(&savedPort);
-    SetPort(port);
-    GetPortBounds(port, &portBounds);
-    EraseRect(&portBounds);
+	// Get the CGContextRef
+	status = GetEventParameter( event, kEventParamCGContextRef, typeCGContextRef, NULL, sizeof( CGContextRef ), NULL, &cgContext );
+	if ( status != noErr )
+	{
+		fprintf( stderr, "Error %d getting context\n", status );
+		return status;
+	}
+	
+	HIViewGetBounds( ( HIViewRef ) userData, &bounds );
+	CGContextTranslateCTM( cgContext, 0, bounds.size.height );
+	CGContextScaleCTM( cgContext, 1.0, -1.0 );
 
 	// Create a style object. This is one of two objects necessary to draw using ATSUI.
 	// (The layout is the other.)
@@ -154,7 +161,7 @@ void DrawVerticalTextContents(WindowRef window)
 
 	// In this example, we are breaking text into lines.
 	// Therefore, we need to know the width (or since this is vertical text, height) of the line.
-	windowHeight = portBounds.bottom - portBounds.top;
+	windowHeight = bounds.size.height;
     lineWidth = X2Fix(windowHeight - (2.0*kVerticalTextMargin));
     tags[0] = kATSULineWidthTag;
     sizes[0] = sizeof(Fixed);
@@ -162,8 +169,6 @@ void DrawVerticalTextContents(WindowRef window)
 	verify_noerr( ATSUSetLayoutControls(layout, 1, tags, sizes, values) );
 
 	// Set up the CGContext for drawing
-	//
-	QDBeginCGContext(port, &cgContext);
 	tags[0] = kATSUCGContextTag;
 	sizes[0] = sizeof(CGContextRef);
 	values[0] = &cgContext;
@@ -210,8 +215,7 @@ void DrawVerticalTextContents(WindowRef window)
 	// the text at some point.
 	
     // Tear down the CGContext
-	CGContextFlush(cgContext);
-	QDEndCGContext(port, &cgContext);
+	CGContextFlush( cgContext );
 
 	// Deallocate string storage
 	free(text);
@@ -220,6 +224,5 @@ void DrawVerticalTextContents(WindowRef window)
 	verify_noerr( ATSUDisposeStyle(style) );
 	verify_noerr( ATSUDisposeTextLayout(layout) );
 
-    // Restore the graphics port
-    SetPort(savedPort);
+	return status;
 }

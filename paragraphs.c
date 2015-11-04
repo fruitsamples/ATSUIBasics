@@ -48,7 +48,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */ 
 
@@ -104,22 +104,9 @@ OSStatus DoWindowBoundsChanged(EventHandlerCallRef nextHandler, EventRef theEven
     verify_noerr( GetEventParameter(theEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof(WindowRef), NULL, &window) );
 
     // Draw the ATSUI content into the window
-    DrawParagraphsContents(window);
+    ParagraphsWindowEventHandler(nextHandler, theEvent, userData);
 
     return noErr;
-}
-
-
-// Install the live resize event handler for this window
-//
-void InstallParagraphsDemoResizeHandler(WindowRef window)
-{
-	EventTypeSpec					eventType;
-
-    // Install a handler to draw the contents of the window during live resize
-    eventType.eventClass = kEventClassWindow;
-    eventType.eventKind  = kEventWindowBoundsChanged;
-    verify_noerr( InstallWindowEventHandler(window, NewEventHandlerUPP(DoWindowBoundsChanged), 1, &eventType, NULL, NULL) );
 }
 
 
@@ -137,9 +124,6 @@ void SetUpParagraphsContents(WindowRef window)
 	UniCharArrayOffset				currentParagraphStart;
 	UniCharArrayOffset				currentParagraphEnd;
 	Boolean							endOfDocument;
-
-    // Make sure the window has a resize event handler
-    InstallParagraphsDemoResizeHandler(window);
 
 	// **** Initialize the text
 	// Load the text we plan to use from the application bundle.
@@ -197,39 +181,41 @@ void SetUpParagraphsContents(WindowRef window)
 
 // Draws the current ATSUI contents in the window
 //
-void DrawParagraphsContents(WindowRef window)
+OSStatus ParagraphsWindowEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData )
 {
-	ATSUTextLayout				layout;
-    UniCharArrayOffset			layoutStart, layoutEnd, currentStart, currentEnd;
-	UniCharCount				layoutLength;
-    ATSUAttributeTag			tags[2];
-    ByteCount					sizes[2];
-    ATSUAttributeValuePtr		values[2];
-	Fixed						lineWidth, ascent, descent;
-	CGContextRef				cgContext;
-	float						x, y, cgY, windowHeight;
-    ItemCount					numSoftBreaks;
-    UniCharArrayOffset			*theSoftBreaks;
-	int							i, j;
-	Boolean						done = false;
-    GrafPtr						port, savedPort;
-	Rect						portBounds;
+	OSStatus				status = noErr;
+	ATSUTextLayout			layout;
+    UniCharArrayOffset		layoutStart, layoutEnd, currentStart, currentEnd;
+	UniCharCount			layoutLength;
+    ATSUAttributeTag		tags[2];
+    ByteCount				sizes[2];
+    ATSUAttributeValuePtr	values[2];
+	Fixed					lineWidth, ascent, descent;
+	CGContextRef			cgContext;
+	float					x, y, cgY, windowHeight;
+    ItemCount				numSoftBreaks;
+    UniCharArrayOffset		*theSoftBreaks;
+	int						i, j;
+	Boolean					done = false;
+	HIRect					bounds;
 
-    // Set up the graphics port
-	port = GetWindowPort(window);
-    GetPort(&savedPort);
-    SetPort(port);
-    GetPortBounds(port, &portBounds);
-    EraseRect(&portBounds);
-
-	// Set up the CGContext
-	QDBeginCGContext(port, &cgContext);
+	// Get the CGContextRef
+	status = GetEventParameter( event, kEventParamCGContextRef, typeCGContextRef, NULL, sizeof( CGContextRef ), NULL, &cgContext );
+	if ( status != noErr )
+	{
+		fprintf( stderr, "Error %d getting cgContext\n", status );
+		return status;
+	}
+	
+	HIViewGetBounds( ( HIViewRef ) userData, &bounds );
+	CGContextTranslateCTM( cgContext, 0, bounds.size.height );
+	CGContextScaleCTM( cgContext, 1.0, -1.0 );
 
 	// Prepare the coordinates for drawing. In our example, "x" and "y" are the coordinates
 	// in QD space. "cgY" contains the y coordinate in CG space.
 	//
-	lineWidth = X2Fix(portBounds.right - portBounds.left - 2.0*kParagraphsMargin);
-	windowHeight = portBounds.bottom - portBounds.top;
+	lineWidth = X2Fix(bounds.size.width - 2.0 * kParagraphsMargin);
+	windowHeight = bounds.size.height;
 	x = kParagraphsMargin; // leave a small left margin
 	y = kParagraphsMargin; // leave a small top margin
 	cgY = windowHeight - y; // Subtract the y coordinate from the height of the
@@ -316,7 +302,7 @@ void DrawParagraphsContents(WindowRef window)
 
 			// Make room for the area above the baseline.
 			y += Fix2X(ascent);
-			if ( y > portBounds.bottom ) {
+			if ( y > bounds.size.height ) {
 				done = true;
 				break; // if we go past the end of the window, stop
 			}
@@ -327,7 +313,7 @@ void DrawParagraphsContents(WindowRef window)
 
 			// Make room for the area beloww the baseline
 			y += Fix2X(descent);
-			if ( y > portBounds.bottom ) {
+			if ( y > bounds.size.height ) {
 				done = true;
 				break; // if we go past the end of the window, stop
 			}
@@ -341,10 +327,8 @@ void DrawParagraphsContents(WindowRef window)
 
     // Tear down the CGContext
 	CGContextFlush(cgContext);
-	QDEndCGContext(port, &cgContext);
 
-    // Restore the graphics port
-    SetPort(savedPort);
+	return status;
 }
 
 
@@ -355,8 +339,8 @@ void DrawParagraphsContents(WindowRef window)
 //
 void DisposeParagraphsContents(void)
 {
-	ATSUTextLayout layout;
-	int i;
+	ATSUTextLayout		layout;
+	int					i;
 
 	free(gText);
 	verify_noerr( ATSUDisposeStyle(gStyle) );

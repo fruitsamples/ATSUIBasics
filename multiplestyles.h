@@ -44,13 +44,13 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */
 
 #ifndef MY_MULTIPLESTYLES_H
 #define MY_MULTIPLESTYLES_H
 
-void DrawMultipleStylesContents(WindowRef window);
+OSStatus MultipleStylesEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData );
 
 #endif /* MY_MULTIPLESTYLES_H */

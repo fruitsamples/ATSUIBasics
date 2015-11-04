@@ -44,7 +44,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */
 
@@ -61,8 +61,11 @@ Copyright © 2004 Apple Computer, Inc., All Rights Reserved
 // drawing text if the currently selected font does not
 // have the necessary glyphs for the text being drawn.
 //
-void DrawFontSubstitutionContents(WindowRef window)
+//--------------------------------------------------------------------------------------------
+OSStatus
+FontSubstitutionWindowEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData )
 {
+	OSStatus				status = noErr;
 	CFStringRef				string;
 	UniChar					*text;
 	UniCharCount			length;
@@ -76,15 +79,19 @@ void DrawFontSubstitutionContents(WindowRef window)
     ATSUAttributeValuePtr	values[2];
 	CGContextRef			cgContext;
 	float					x, y, spacer, cgY;
-    GrafPtr					port, savedPort;
-	Rect					portBounds;
+	HIRect					bounds;
 
-    // Set up the graphics port
-	port = GetWindowPort(window);
-    GetPort(&savedPort);
-    SetPort(port);
-    GetPortBounds(port, &portBounds);
-    EraseRect(&portBounds);
+	// Get the CGContextRef
+	status = GetEventParameter( event, kEventParamCGContextRef, typeCGContextRef, NULL, sizeof( CGContextRef ), NULL, &cgContext );
+	if ( status != noErr )
+	{
+		fprintf( stderr, "Error %d getting cgContext\n", status );
+		return status;
+	}
+	
+	HIViewGetBounds( ( HIViewRef ) userData, &bounds );
+	CGContextTranslateCTM( cgContext, 0, bounds.size.height );
+	CGContextScaleCTM( cgContext, 1.0, -1.0 );
 
 	// First we create the style and configure some basic settings
 	verify_noerr( ATSUCreateStyle(&style) );
@@ -120,19 +127,17 @@ void DrawFontSubstitutionContents(WindowRef window)
 	// Now we tie the two necessary objects, the layout and the style, together
 	verify_noerr( ATSUSetRunStyle(layout, style, kATSUFromTextBeginning, kATSUToTextEnd) );
 
-	// Set up a CGContext for drawing
-	QDBeginCGContext(port, &cgContext);
 	tags[0] = kATSUCGContextTag;
 	sizes[0] = sizeof(CGContextRef);
 	values[0] = &cgContext;
 	verify_noerr( ATSUSetLayoutControls(layout, 1, tags, sizes, values) );
 	
 	// Set up initial coordinates for drawing
-	spacer = (portBounds.bottom - portBounds.top) / 4.0; // There are three examples in this window,
-														 // so divide the window up vertially as needed
-	x = kFontSubstitutionMargin; // leave a small left margin
-	y = spacer; // start near the top, same about of margin
-	cgY = (portBounds.bottom - portBounds.top) - y; // CG-aware y coordinate
+	spacer = bounds.size.height / 4.0;	// There are three examples in this window, so divide the window up vertially as needed
+										// so divide the window up vertially as needed
+	x = kFontSubstitutionMargin;	// leave a small left margin
+	y = spacer;	// start near the top, same about of margin
+	cgY = bounds.size.height - y;	// CG-aware y coordinate
 
 	// Draw for the first time, with no font substitution. Any text that has no glyphs
 	// available in the currently selected font will show up as boxes. This is generally
@@ -170,7 +175,7 @@ void DrawFontSubstitutionContents(WindowRef window)
 	
 	// Let's see what the results look like now, with last resort substitution turned on
 	y += spacer; // move down for the next case
-	cgY = (portBounds.bottom - portBounds.top) - y; // CG-aware y coordinate
+	cgY = bounds.size.height - y; // CG-aware y coordinate
 	verify_noerr( ATSUDrawText(layout, kATSUFromTextBeginning, kATSUToTextEnd, X2Fix(x), X2Fix(cgY)) );
 
 	// And now let's draw it again with default font substitution turned on, which will search
@@ -181,7 +186,7 @@ void DrawFontSubstitutionContents(WindowRef window)
 	//
 	verify_noerr( ATSUSetObjFontFallbacks(fallbacks, 0, NULL, kATSUDefaultFontFallbacks) );
 	y += spacer; // move down for the next case
-	cgY = (portBounds.bottom - portBounds.top) - y; // CG-aware y coordinate
+	cgY = bounds.size.height - y; // CG-aware y coordinate
 	verify_noerr( ATSUDrawText(layout, kATSUFromTextBeginning, kATSUToTextEnd, X2Fix(x), X2Fix(cgY)) );
 
 	// This is a one-shot window, so we are now ready to dispose of all our objects.
@@ -189,8 +194,7 @@ void DrawFontSubstitutionContents(WindowRef window)
 	// the text at some point.
 	
     // Tear down the CGContext
-	CGContextFlush(cgContext);
-	QDEndCGContext(port, &cgContext);
+	CGContextFlush( cgContext );
 
 	// Deallocate string storage
 	free(text);
@@ -200,6 +204,5 @@ void DrawFontSubstitutionContents(WindowRef window)
 	verify_noerr( ATSUDisposeTextLayout(layout) );
 	verify_noerr( ATSUDisposeFontFallbacks(fallbacks) );
 
-    // Restore the graphics port
-    SetPort(savedPort);
+	return status;
 }

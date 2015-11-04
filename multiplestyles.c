@@ -45,7 +45,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */
 
@@ -61,35 +61,42 @@ Copyright © 2004 Apple Computer, Inc., All Rights Reserved
 // in this case, there are two styles instead of just one. ATSUSetRunStyle
 // is used to apply a style to different parts of the text.
 //
-void DrawMultipleStylesContents(WindowRef window)
+//--------------------------------------------------------------------------------------------
+OSStatus
+MultipleStylesEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData )
 {
-	CFStringRef					string;
-	UniChar						*text;
-	UniCharCount				length;
-    UniCharArrayOffset			currentStart, currentEnd;
-	ATSUStyle					style1, style2;
-	ATSUTextLayout				layout;
-	ATSUFontID					font;
-	Fixed						pointSize;
-    ATSUAttributeTag			tags[2];
-    ByteCount					sizes[2];
-    ATSUAttributeValuePtr		values[2];
-	Fixed						lineWidth, ascent, descent;
-	CGContextRef				cgContext;
-	float						x, y, cgY, windowHeight;
-    ItemCount					numSoftBreaks;
-    UniCharArrayOffset			*theSoftBreaks;
-    int							i;
-    GrafPtr						port, savedPort;
-	Rect						portBounds;
+	OSStatus				status = noErr;
+	CFStringRef				string;
+	UniChar					*text;
+	UniCharCount			length;
+    UniCharArrayOffset		currentStart, currentEnd;
+	ATSUStyle				style1, style2;
+	ATSUTextLayout			layout;
+	ATSUFontID				font;
+	Fixed					pointSize;
+    ATSUAttributeTag		tags[2];
+    ByteCount				sizes[2];
+    ATSUAttributeValuePtr	values[2];
+	Fixed					lineWidth, ascent, descent;
+	CGContextRef			cgContext;
+	float					x, y, cgY, windowHeight;
+    ItemCount				numSoftBreaks;
+    UniCharArrayOffset		*theSoftBreaks;
+    int						i;
+	HIRect					bounds;
 
-    // Set up the graphics port
-	port = GetWindowPort(window);
-    GetPort(&savedPort);
-    SetPort(port);
-    GetPortBounds(port, &portBounds);
-    EraseRect(&portBounds);
-
+	// Get the CGContextRef
+	status = GetEventParameter( event, kEventParamCGContextRef, typeCGContextRef, NULL, sizeof( CGContextRef ), NULL, &cgContext );
+	if ( status != noErr )
+	{
+		fprintf( stderr, "Error %d getting cgContext\n", status );
+		return status;
+	}
+	
+	HIViewGetBounds( ( HIViewRef ) userData, &bounds );
+	CGContextTranslateCTM( cgContext, 0, bounds.size.height );
+	CGContextScaleCTM( cgContext, 1.0, -1.0 );
+	
 	// Create a style object. This is one of two objects necessary to draw using ATSUI.
 	// (The layout is the other.)
 	verify_noerr( ATSUCreateStyle(&style1) );
@@ -155,14 +162,12 @@ void DrawMultipleStylesContents(WindowRef window)
 
 	// In this example, we are breaking text into lines.
 	// Therefore, we need to know the width of the line.
-    lineWidth = X2Fix(portBounds.right - portBounds.left - 2.0*kMultipleStylesMargin);
+    lineWidth = X2Fix(bounds.size.width - 2.0*kMultipleStylesMargin);
     tags[0] = kATSULineWidthTag;
     sizes[0] = sizeof(Fixed);
     values[0] = &lineWidth;
 	verify_noerr( ATSUSetLayoutControls(layout, 1, tags, sizes, values) );
 
-	// Prepare the CGContext for drawing
-	QDBeginCGContext(port, &cgContext);
 	tags[0] = kATSUCGContextTag;
 	sizes[0] = sizeof(CGContextRef);
 	values[0] = &cgContext;
@@ -171,7 +176,7 @@ void DrawMultipleStylesContents(WindowRef window)
 	// Prepare the coordinates for drawing. In our example, "x" and "y" are the coordinates
 	// in QD space. "cgY" contains the y coordinate in CG space.
 	//
-	windowHeight = portBounds.bottom - portBounds.top;
+	windowHeight = bounds.size.height;
 	x = kMultipleStylesMargin; // leave a small left margin
 	y = kMultipleStylesMargin; // leave a small top margin
 	cgY = windowHeight - y; // Subtract the y coordinate from the height of the
@@ -211,8 +216,7 @@ void DrawMultipleStylesContents(WindowRef window)
 	// the text at some point.
 	
     // Tear down the CGContext
-	CGContextFlush(cgContext);
-	QDEndCGContext(port, &cgContext);
+	CGContextFlush( cgContext );
 
 	// Deallocate string storage
 	free(text);
@@ -222,6 +226,5 @@ void DrawMultipleStylesContents(WindowRef window)
 	verify_noerr( ATSUDisposeStyle(style2) );
 	verify_noerr( ATSUDisposeTextLayout(layout) );
 
-    // Restore the graphics port
-    SetPort(savedPort);
+	return status;
 }

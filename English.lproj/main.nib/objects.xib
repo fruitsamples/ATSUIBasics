@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="22" name="allObjects">
+  <array count="27" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="2" name="items">
@@ -77,11 +77,25 @@
     <reference idRef="196"/>
     <reference idRef="197"/>
     <object class="IBCarbonWindow" id="217">
-      <string name="windowRect">71 44 431 524 </string>
+      <string name="windowRect">80 40 440 520 </string>
       <string name="title">Hello World!</string>
       <object name="rootControl" class="IBCarbonRootControl" id="218">
         <string name="bounds">0 0 360 480 </string>
         <string name="viewFrame">0 0 480 360 </string>
+        <array count="1" name="subviews">
+          <object class="IBCarbonHIView" id="235">
+            <string name="bounds">0 0 360 480 </string>
+            <string name="viewFrame">0 0 480 360 </string>
+            <ostype name="controlSignature">Wnd1</ostype>
+            <int name="controlID">1</int>
+            <object name="layoutInfo" class="IBCarbonHILayoutInfo">
+              <int name="bindingTopKind">1</int>
+              <int name="bindingLeftKind">1</int>
+              <int name="bindingBottomKind">2</int>
+              <int name="bindingRightKind">2</int>
+            </object>
+          </object>
+        </array>
       </object>
       <boolean name="receiveUpdates">FALSE</boolean>
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -93,19 +107,28 @@
       <int name="windowPosition">4</int>
       <boolean name="asyncDrag">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
-      <boolean name="hideOnFullScreen">FALSE</boolean>
-      <boolean name="hideOnSuspend">FALSE</boolean>
-      <boolean name="hasShadow">TRUE</boolean>
-      <boolean name="doesNotCycle">FALSE</boolean>
-      <boolean name="inWindowMenu">TRUE</boolean>
     </object>
     <reference idRef="218"/>
     <object class="IBCarbonWindow" id="219">
-      <string name="windowRect">108 78 468 558 </string>
+      <string name="windowRect">120 80 480 560 </string>
       <string name="title">Multiple Styles</string>
       <object name="rootControl" class="IBCarbonRootControl" id="220">
         <string name="bounds">0 0 360 480 </string>
         <string name="viewFrame">0 0 480 360 </string>
+        <array count="1" name="subviews">
+          <object class="IBCarbonHIView" id="236">
+            <string name="bounds">0 0 360 480 </string>
+            <string name="viewFrame">0 0 480 360 </string>
+            <ostype name="controlSignature">Wnd2</ostype>
+            <int name="controlID">2</int>
+            <object name="layoutInfo" class="IBCarbonHILayoutInfo">
+              <int name="bindingTopKind">1</int>
+              <int name="bindingLeftKind">1</int>
+              <int name="bindingBottomKind">2</int>
+              <int name="bindingRightKind">2</int>
+            </object>
+          </object>
+        </array>
       </object>
       <boolean name="receiveUpdates">FALSE</boolean>
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -117,19 +140,28 @@
       <int name="windowPosition">4</int>
       <boolean name="asyncDrag">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
-      <boolean name="hideOnFullScreen">FALSE</boolean>
-      <boolean name="hideOnSuspend">FALSE</boolean>
-      <boolean name="hasShadow">TRUE</boolean>
-      <boolean name="doesNotCycle">FALSE</boolean>
-      <boolean name="inWindowMenu">TRUE</boolean>
     </object>
     <reference idRef="220"/>
     <object class="IBCarbonWindow" id="221">
-      <string name="windowRect">184 156 544 636 </string>
+      <string name="windowRect">200 160 560 640 </string>
       <string name="title">Vertical Text</string>
       <object name="rootControl" class="IBCarbonRootControl" id="222">
         <string name="bounds">0 0 360 480 </string>
         <string name="viewFrame">0 0 480 360 </string>
+        <array count="1" name="subviews">
+          <object class="IBCarbonHIView" id="238">
+            <string name="bounds">0 0 360 480 </string>
+            <string name="viewFrame">0 0 480 360 </string>
+            <ostype name="controlSignature">Wnd4</ostype>
+            <int name="controlID">4</int>
+            <object name="layoutInfo" class="IBCarbonHILayoutInfo">
+              <int name="bindingTopKind">1</int>
+              <int name="bindingLeftKind">1</int>
+              <int name="bindingBottomKind">2</int>
+              <int name="bindingRightKind">2</int>
+            </object>
+          </object>
+        </array>
       </object>
       <boolean name="receiveUpdates">FALSE</boolean>
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -141,19 +173,28 @@
       <int name="windowPosition">4</int>
       <boolean name="asyncDrag">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
-      <boolean name="hideOnFullScreen">FALSE</boolean>
-      <boolean name="hideOnSuspend">FALSE</boolean>
-      <boolean name="hasShadow">TRUE</boolean>
-      <boolean name="doesNotCycle">FALSE</boolean>
-      <boolean name="inWindowMenu">TRUE</boolean>
     </object>
     <reference idRef="222"/>
     <object class="IBCarbonWindow" id="223">
-      <string name="windowRect">224 200 584 680 </string>
+      <string name="windowRect">240 200 600 680 </string>
       <string name="title">Paragraphs</string>
       <object name="rootControl" class="IBCarbonRootControl" id="224">
         <string name="bounds">0 0 360 480 </string>
         <string name="viewFrame">0 0 480 360 </string>
+        <array count="1" name="subviews">
+          <object class="IBCarbonHIView" id="239">
+            <string name="bounds">0 0 360 480 </string>
+            <string name="viewFrame">0 0 480 360 </string>
+            <ostype name="controlSignature">Wnd5</ostype>
+            <int name="controlID">5</int>
+            <object name="layoutInfo" class="IBCarbonHILayoutInfo">
+              <int name="bindingTopKind">1</int>
+              <int name="bindingLeftKind">1</int>
+              <int name="bindingBottomKind">2</int>
+              <int name="bindingRightKind">2</int>
+            </object>
+          </object>
+        </array>
       </object>
       <boolean name="receiveUpdates">FALSE</boolean>
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -162,19 +203,28 @@
       <int name="windowPosition">4</int>
       <boolean name="asyncDrag">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
-      <boolean name="hideOnFullScreen">FALSE</boolean>
-      <boolean name="hideOnSuspend">FALSE</boolean>
-      <boolean name="hasShadow">TRUE</boolean>
-      <boolean name="doesNotCycle">FALSE</boolean>
-      <boolean name="inWindowMenu">TRUE</boolean>
     </object>
     <reference idRef="224"/>
     <object class="IBCarbonWindow" id="233">
-      <string name="windowRect">149 118 509 598 </string>
+      <string name="windowRect">160 120 520 600 </string>
       <string name="title">Font Substitution</string>
       <object name="rootControl" class="IBCarbonRootControl" id="234">
         <string name="bounds">0 0 360 480 </string>
         <string name="viewFrame">0 0 480 360 </string>
+        <array count="1" name="subviews">
+          <object class="IBCarbonHIView" id="237">
+            <string name="bounds">0 0 360 480 </string>
+            <string name="viewFrame">0 0 480 360 </string>
+            <ostype name="controlSignature">Wnd3</ostype>
+            <int name="controlID">3</int>
+            <object name="layoutInfo" class="IBCarbonHILayoutInfo">
+              <int name="bindingTopKind">1</int>
+              <int name="bindingLeftKind">1</int>
+              <int name="bindingBottomKind">2</int>
+              <int name="bindingRightKind">2</int>
+            </object>
+          </object>
+        </array>
       </object>
       <boolean name="receiveUpdates">FALSE</boolean>
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -186,15 +236,15 @@
       <int name="windowPosition">4</int>
       <boolean name="asyncDrag">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
-      <boolean name="hideOnFullScreen">FALSE</boolean>
-      <boolean name="hideOnSuspend">FALSE</boolean>
-      <boolean name="hasShadow">TRUE</boolean>
-      <boolean name="doesNotCycle">FALSE</boolean>
-      <boolean name="inWindowMenu">TRUE</boolean>
     </object>
     <reference idRef="234"/>
+    <reference idRef="235"/>
+    <reference idRef="236"/>
+    <reference idRef="237"/>
+    <reference idRef="238"/>
+    <reference idRef="239"/>
   </array>
-  <array count="22" name="allParents">
+  <array count="27" name="allParents">
     <reference idRef="1"/>
     <reference idRef="185"/>
     <reference idRef="29"/>
@@ -217,8 +267,13 @@
     <reference idRef="223"/>
     <reference idRef="1"/>
     <reference idRef="233"/>
+    <reference idRef="218"/>
+    <reference idRef="220"/>
+    <reference idRef="234"/>
+    <reference idRef="222"/>
+    <reference idRef="224"/>
   </array>
-  <dictionary count="7" name="nameTable">
+  <dictionary count="8" name="nameTable">
     <string>Files Owner</string>
     <reference idRef="1"/>
     <string>FontSubstitutionWindow</string>
@@ -233,6 +288,8 @@
     <reference idRef="223"/>
     <string>VerticalTextWindow</string>
     <reference idRef="221"/>
+    <string>View1</string>
+    <reference idRef="236"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">235</unsigned_int>
+  <unsigned_int name="nextObjectID">240</unsigned_int>
 </object>

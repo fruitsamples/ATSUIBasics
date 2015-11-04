@@ -45,7 +45,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */ 
 
@@ -56,6 +56,17 @@ Copyright © 2004 Apple Computer, Inc., All Rights Reserved
 #include "verticaltext.h"
 #include "paragraphs.h"
 
+#define kHelloWorldHIViewSignature			'Wnd1'
+#define kHelloWorldHIViewFieldID			1
+#define kMultipleStylesHIViewSignature		'Wnd2'
+#define kMultipleStylesHIViewFieldID		2
+#define kFontSubstitutionHIViewSignature	'Wnd3'
+#define kFontSubstitutionHIViewFieldID		3
+#define kVerticalTextHIViewSignature		'Wnd4'
+#define kVerticalTextHIViewFieldID			4
+#define kParagraphsHIViewSignature			'Wnd5'
+#define kParagraphsHIViewFieldID			5
+
 // Main entry point
 //
 int main(int argc, char* argv[])
@@ -65,8 +76,23 @@ int main(int argc, char* argv[])
 	WindowRef		fontSubtitutionWindow;
 	WindowRef		verticalTextWindow;
 	WindowRef		paragraphsWindow;
+	
+	HIViewRef		helloWorldView;
+	HIViewRef		multipleStylesView;
+	HIViewRef		fontSubtitutionView;
+	HIViewRef		verticalTextView;
+	HIViewRef		paragraphsView;
+	
     IBNibRef 		nibRef;
-    OSStatus		err;
+    OSStatus		err = noErr;
+
+    static const EventTypeSpec kMyEvents[] =		{ { kEventClassControl, kEventControlDraw } };
+
+	static const HIViewID helloWorldViewID =		{ kHelloWorldHIViewSignature, kHelloWorldHIViewFieldID };
+	static const HIViewID multipleStylesViewID =	{ kMultipleStylesHIViewSignature, kMultipleStylesHIViewFieldID };
+	static const HIViewID fontSubstitutionViewID =	{ kFontSubstitutionHIViewSignature, kFontSubstitutionHIViewFieldID };
+	static const HIViewID verticalTextViewID =		{ kVerticalTextHIViewSignature, kVerticalTextHIViewFieldID };
+	static const HIViewID paragraphsViewID =		{ kParagraphsHIViewSignature, kParagraphsHIViewFieldID };
 
     // Get the GUI resources from the NIB file
     err = CreateNibReference(CFSTR("main"), &nibRef);
@@ -79,41 +105,44 @@ int main(int argc, char* argv[])
     // *** Create the "Hello World!" window, make it visible, draw its contents
     err = CreateWindowFromNib(nibRef, CFSTR("HelloWorldWindow"), &helloWorldWindow);
     require_noerr( err, CantCreateWindow );
+	HIViewFindByID( HIViewGetRoot( helloWorldWindow ), helloWorldViewID, &helloWorldView );
+	err = HIViewInstallEventHandler( helloWorldView, NewEventHandlerUPP( HelloWorldEventHandler ), GetEventTypeCount( kMyEvents ), kMyEvents, ( void * ) helloWorldView, NULL );
     ShowWindow(helloWorldWindow);
-	DrawHelloWorldContents(helloWorldWindow);
 
     // *** Create the Multiple Styles window, make it visible, draw its contents
     err = CreateWindowFromNib(nibRef, CFSTR("MultipleStylesWindow"), &multipleStylesWindow);
     require_noerr( err, CantCreateWindow );
+	HIViewFindByID( HIViewGetRoot( multipleStylesWindow ), multipleStylesViewID, &multipleStylesView );
+	err = HIViewInstallEventHandler( multipleStylesView, NewEventHandlerUPP( MultipleStylesEventHandler ), GetEventTypeCount( kMyEvents ), kMyEvents, ( void * ) multipleStylesView, NULL );
     ShowWindow(multipleStylesWindow);
-	DrawMultipleStylesContents(multipleStylesWindow);
 
     // *** Create the Font Substitution window, make it visible, draw its contents
     err = CreateWindowFromNib(nibRef, CFSTR("FontSubstitutionWindow"), &fontSubtitutionWindow);
     require_noerr( err, CantCreateWindow );
+	HIViewFindByID( HIViewGetRoot( fontSubtitutionWindow ), fontSubstitutionViewID, &fontSubtitutionView );
+	err = HIViewInstallEventHandler( fontSubtitutionView, NewEventHandlerUPP( FontSubstitutionWindowEventHandler ), GetEventTypeCount( kMyEvents ), kMyEvents, ( void * ) fontSubtitutionView, NULL );
     ShowWindow(fontSubtitutionWindow);
-	DrawFontSubstitutionContents(fontSubtitutionWindow);
 
     // *** Create the Vertical Text window, make it visible, draw its contents
     err = CreateWindowFromNib(nibRef, CFSTR("VerticalTextWindow"), &verticalTextWindow);
+	HIViewFindByID( HIViewGetRoot( verticalTextWindow ), verticalTextViewID, &verticalTextView );
+	err = HIViewInstallEventHandler( verticalTextView, NewEventHandlerUPP( VerticalTextWindowEventHandler ), GetEventTypeCount( kMyEvents ), kMyEvents, ( void * ) verticalTextView, NULL );
     require_noerr( err, CantCreateWindow );
     ShowWindow(verticalTextWindow);
-	DrawVerticalTextContents(verticalTextWindow);
 
     // *** Create the Paragraphs window, make it visible, set up and draw its contents for the first time
     err = CreateWindowFromNib(nibRef, CFSTR("ParagraphsWindow"), &paragraphsWindow);
     require_noerr( err, CantCreateWindow );
-    ShowWindow(paragraphsWindow);
 	SetUpParagraphsContents(paragraphsWindow);
-	DrawParagraphsContents(paragraphsWindow);
+	HIViewFindByID( HIViewGetRoot( paragraphsWindow ), paragraphsViewID, &paragraphsView );
+	err = HIViewInstallEventHandler( paragraphsView, NewEventHandlerUPP( ParagraphsWindowEventHandler ), GetEventTypeCount( kMyEvents ), kMyEvents, ( void * ) paragraphsView, NULL );
+    ShowWindow(paragraphsWindow);
 
-    // That's everything we needed from the NIB
     DisposeNibReference(nibRef);
     
     // Call the event loop
     RunApplicationEventLoop();
 
-CantDoSetup:
 CantCreateWindow:
 CantSetMenuBar:
 CantGetNibRef:

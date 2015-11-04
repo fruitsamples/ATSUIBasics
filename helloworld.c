@@ -45,7 +45,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2004 Apple Computer, Inc., All Rights Reserved
+Copyright © 2004-2007 Apple Inc., All Rights Reserved
 
 */
 
@@ -79,8 +79,11 @@ Copyright © 2004 Apple Computer, Inc., All Rights Reserved
 // you are completely done with them. It is much quicker to keep the
 // layouts around and redraw them than to set everything up from scratch.
 //
-void DrawHelloWorldContents(WindowRef window)
+//--------------------------------------------------------------------------------------------
+OSStatus
+HelloWorldEventHandler( EventHandlerCallRef myHandlerRef, EventRef event, void *userData )
 {
+	OSStatus				status = noErr;
 	CFStringRef				string;
 	UniChar					*text;
 	UniCharCount			length;
@@ -93,16 +96,20 @@ void DrawHelloWorldContents(WindowRef window)
     ATSUAttributeValuePtr	values[2];
 	CGContextRef			cgContext;
 	float					x, y, cgY;
-    GrafPtr					port, savedPort;
-	Rect					portBounds;
+	HIRect					bounds;
 
-    // Set up the graphics port
-	port = GetWindowPort(window);
-    GetPort(&savedPort);
-    SetPort(port);
-    GetPortBounds(port, &portBounds);
-    EraseRect(&portBounds);
+	// Get the CGContextRef
+	status = GetEventParameter( event, kEventParamCGContextRef, typeCGContextRef, NULL, sizeof( CGContextRef ), NULL, &cgContext );
+	if ( status != noErr )
+	{
+		fprintf( stderr, "Error %d getting cgContext\n", status );
+		return status;
+	}
 
+	HIViewGetBounds( ( HIViewRef ) userData, &bounds );
+	CGContextTranslateCTM( cgContext, 0, bounds.size.height );
+	CGContextScaleCTM( cgContext, 1.0, -1.0 );
+	
 	// Create a style object. This is one of two objects necessary to draw using ATSUI.
 	// (The layout is the other.)
 	verify_noerr( ATSUCreateStyle(&style) );
@@ -165,7 +172,6 @@ void DrawHelloWorldContents(WindowRef window)
 	// However, it is preferred that clients set up their own CGContext and pass it to ATSUI
 	// before drawing. This not only gives the client more control, it offers the best performance.
 	//
-	QDBeginCGContext(port, &cgContext);
 	tags[0] = kATSUCGContextTag;
 	sizes[0] = sizeof(CGContextRef);
 	values[0] = &cgContext;
@@ -181,9 +187,9 @@ void DrawHelloWorldContents(WindowRef window)
 	// "x" and "y" are the coordinates in QD space. "cgY" contains the y coordinate in CG space.
 	//
 	x = kHelloWorldMargin; // leave a small left margin
-	y = (portBounds.bottom - portBounds.top) / 2.0; // Center the text vertically
-	cgY = (portBounds.bottom - portBounds.top) - y; // Subtract the y coordinate from the height of the
-													// window to get the coordinate in CG-aware space.
+	y = bounds.size.height / 2.0; // Center the text vertically
+	cgY = bounds.size.height - y; // Subtract the y coordinate from the height of the
+								  // window to get the coordinate in CG-aware space.
 
 	verify_noerr( ATSUDrawText(layout, kATSUFromTextBeginning, kATSUToTextEnd, X2Fix(x), X2Fix(cgY)) );
 	
@@ -192,8 +198,7 @@ void DrawHelloWorldContents(WindowRef window)
 	// the text at some point.
 	
     // Tear down the CGContext
-	CGContextFlush(cgContext);
-	QDEndCGContext(port, &cgContext);
+	CGContextFlush( cgContext );
 
 	// Deallocate string storage
 	free(text);
@@ -202,6 +207,5 @@ void DrawHelloWorldContents(WindowRef window)
 	verify_noerr( ATSUDisposeStyle(style) );
 	verify_noerr( ATSUDisposeTextLayout(layout) );
 
-    // Restore the graphics port
-    SetPort(savedPort);
+	return status;
 }
